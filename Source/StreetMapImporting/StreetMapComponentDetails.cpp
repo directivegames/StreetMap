@@ -43,7 +43,11 @@ void FStreetMapComponentDetails::CustomizeDetails(IDetailLayoutBuilder& DetailBu
 {
 	LastDetailBuilderPtr = &DetailBuilder;
 
+#if 1 // WITH_DIRECTIVE
+	TArray <TWeakObjectPtr<UObject>> SelectedObjects = DetailBuilder.GetDetailsView()->GetSelectedObjects();
+#else
 	TArray <TWeakObjectPtr<UObject>> SelectedObjects = DetailBuilder.GetDetailsView().GetSelectedObjects();
+#endif
 
 	for (const TWeakObjectPtr<UObject>& Object : SelectedObjects)
 	{
@@ -58,7 +62,11 @@ void FStreetMapComponentDetails::CustomizeDetails(IDetailLayoutBuilder& DetailBu
 
 	if (SelectedStreetMapComponent == nullptr)
 	{
+#if 1 // WITH_DIRECTIVE
+		TArray<TWeakObjectPtr<AActor>> SelectedActors = DetailBuilder.GetDetailsView()->GetSelectedActors();
+#else
 		TArray<TWeakObjectPtr<AActor>> SelectedActors = DetailBuilder.GetDetailsView().GetSelectedActors();
+#endif
 
 		for (const TWeakObjectPtr<UObject>& Object : SelectedObjects)
 		{

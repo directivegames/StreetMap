@@ -73,10 +73,15 @@ void FStreetMapVertexFactory::InitVertexFactory( const FStreetMapVertexBuffer& V
 
 FStreetMapSceneProxy::FStreetMapSceneProxy(const UStreetMapComponent* InComponent)
 	: FPrimitiveSceneProxy(InComponent),
+#if 1 // WITH_DIRECTIVE
+	VertexFactory(GetScene().GetFeatureLevel()),
+#endif
 	StreetMapComp(InComponent),
 	CollisionResponse(InComponent->GetCollisionResponseToChannels())
 {
-
+#if 1 // WITH_DIRECTIVE
+	VertexFactory.InitVertexFactory(VertexBuffer);
+#endif
 }
 
 
@@ -278,3 +283,12 @@ uint32 FStreetMapSceneProxy::GetMemoryFootprint( void ) const
 { 
 	return sizeof( *this ) + GetAllocatedSize();
 }
+
+
+#if 1 // WITH_DIRECTIVE
+SIZE_T FStreetMapSceneProxy::GetTypeHash() const
+{
+	static size_t UniquePointer;
+	return reinterpret_cast<size_t>(&UniquePointer);
+}
+#endif

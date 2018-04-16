@@ -88,6 +88,11 @@ class FStreetMapVertexFactory : public FLocalVertexFactory
 {
 
 public:
+#if 1
+	FStreetMapVertexFactory(ERHIFeatureLevel::Type InFeatureLevel):
+		FLocalVertexFactory(InFeatureLevel, "FStreetMapVertexFactory")
+	{}
+#endif
 
 	/** Initialize this vertex factory */
 	void InitVertexFactory( const FStreetMapVertexBuffer& VertexBuffer );
@@ -120,6 +125,10 @@ public:
 	* @param	Indices				The vertex indices for this street map mesh
 	*/
 	void Init(const UStreetMapComponent* InComponent, const TArray< FStreetMapVertex >& Vertices, const TArray< uint16 >& Indices);
+
+#if 1 // WITH_DIRECTIVE
+	SIZE_T GetTypeHash() const override;
+#endif
 
 	/** Destructor that cleans up our rendering data */
 	virtual ~FStreetMapSceneProxy();
